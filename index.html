@@ -1,16 +1,46 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Current converter</title>
+	<title>Currency converter</title>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
 	<script type="text/javascript" src="js/js.js" ></script>
+	<script type="text/javascript">
+    //mobile viewport hack
+    (function(){
+
+      function apply_viewport(){
+        if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)   ) {
+
+          var ww = window.screen.width;
+          var mw = 800; // min width of site
+          var ratio =  ww / mw; //calculate ratio
+          var viewport_meta_tag = document.getElementById('viewport');
+          if( ww < mw){ //smaller than minimum size
+            viewport_meta_tag.setAttribute('content', 'initial-scale=' + ratio + ', maximum-scale=' + ratio + ', minimum-scale=' + ratio + ', user-scalable=no, width=' + mw);
+          }
+          else { //regular size
+            viewport_meta_tag.setAttribute('content', 'initial-scale=1.0, maximum-scale=1, minimum-scale=1.0, user-scalable=yes, width=' + ww);
+          }
+        }
+      }
+
+      //ok, i need to update viewport scale if screen dimentions changed
+      window.addEventListener('resize', function(){
+        apply_viewport();
+      });
+
+      apply_viewport();
+
+    }());
+    </script>
 	<style>
 	.scrollable-menu 
 	{
 		height: auto;
 		max-height: 200px;
+		width: 200px;
 		overflow-x: hidden;
 	}
 </style>
@@ -18,31 +48,31 @@
 <body>
 
 	<!-- Begin page content -->
-	<div class="container col-12">
+	<div class="container col-12" style="min-width:  550px;">
 		<div class="jumbotron mt-3">
 
-			<h1 class="mb-5">Current Exchanger:</h1>
+			<h1 class="mb-5">Currency Exchanger:</h1>
 
 			<table class="table mb-5">
 				<thead>
 					<tr>
 						<th class="w-25">Amount:</th>
-						<th class="w-25">Current:</th>
-						<th class="w-50">EUR:</th>
+						<th class="w-41">Current:</th>
+						<th class="w-34">EUR:</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
 						<td>
 							<div class="w-100">
-								<input type="text" class="form-control" id="amount">
+								<input type="text" maxlength="7" class="form-control" id="amount">
 							</div>
 						</td>
 						<td>
 							<div class="dropdown d-inline">
 
 								<button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-									<div id="current" class="d-inline">Select Current</div>	&nbsp; 
+									<div id="current" class="d-inline">Select Currency</div>	&nbsp; 
 									<div id="rate" class="d-inline"></div>
 								</button>
 
@@ -53,7 +83,7 @@
 
 							</div>
 
-							<button class="btn btn-primary d-inline" type="button" id="convert">
+							<button class="btn btn-dark d-inline" type="button" id="convert">
 								<b> > </b>
 							</button>
 						</td>
@@ -69,12 +99,14 @@
 			</div>
 
 			<div class="mb-5">
-				<p class="lead d-inline mr-5">New rates update will be in:</p>	
-				<p class="lead d-inline" id="timer"></p> 
-				<p class="lead d-inline mr-5">s</p>
+				<p class="lead d-inline mr-2">New rates update will be in:</p>	
+				
+				<p class="lead d-inline font-weight-bold" id="timer"></p> 
+				<p class="lead d-inline mr-5 font-weight-bold">s</p>
+			
 
-				<button class="btn btn-primary d-inline" type="button" id="update_now" onclick="update_now()">
-					<b> Update now! </b>
+				<button class="btn btn-secondary d-inline" type="button" id="update_now" onclick="update_now()">
+					 Update now! 
 				</button>
 
 			</div>

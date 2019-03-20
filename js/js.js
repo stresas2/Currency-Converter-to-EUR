@@ -8,9 +8,9 @@ var url = 'http://data.fixer.io/api/' + endpoint + '?access_key=' + access_key;
 function upload_json()
 {
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() 
+    xmlhttp.onreadystatechange = function()
     {
-        if (this.readyState == 4 && this.status == 200) 
+        if (this.readyState == 4 && this.status == 200)
         {
 
             var myObj = JSON.parse(this.responseText);
@@ -20,7 +20,7 @@ function upload_json()
             currents_rates = myObj.rates;
 
             Insert_Curents_To_List(currents_list, currents_rates);
-            
+
         }
     };
 
@@ -39,7 +39,7 @@ function Insert_Curents_To_List()
   for(i = 0; i < currents_list.length; i++)
   {
 
-      full_list_index += '<a class="dropdown-item" onClick="set_current_index(this);" href="#"><div id="current_name" class="d-inline">' + currents_list[i] + '</div>	&nbsp; <div id="current_rate" class="d-inline">' + currents_rates[currents_list[i]] + '</div></a>';	
+      full_list_index += '<a class="dropdown-item" onClick="set_current_index(this);" href="#"><div id="current_name" class="d-inline">' + currents_list[i] + '</div><div id="current_rate" class="d-inline float-right">' + currents_rates[currents_list[i]].toFixed(3) + '</div></a>';
   }
 
   document.getElementById('full_list').innerHTML = full_list_index;
@@ -50,7 +50,7 @@ function Insert_Curents_To_List()
 var time_left = 120;
 var t;
 
-function timedCount() 
+function timedCount()
 {
 
     document.getElementById("timer").innerHTML = time_left;
@@ -70,7 +70,7 @@ function update_now()
 
     time_left = 120;
     upload_json();
-    
+
 };
 
 function set_current_index(obj)
@@ -83,9 +83,9 @@ function set_current_index(obj)
 
 };
 
-function addZero(i) 
+function addZero(i)
 {
-    if (i < 10) 
+    if (i < 10)
     {
         i = "0" + i;
     }
@@ -141,18 +141,18 @@ $(document).ready(function() {
        rate = $('#rate').html();
        current = $('#current').html();
 
-       if(!isNaN(amount) && current != 'Select Current' && amount != '')
+       if(!isNaN(amount) && current != 'Select Currency' && amount != '')
        {
 
         amount_in_eur = amount / rate;
 
-        amount_in_eur = amount_in_eur.toFixed(4)
+        amount_in_eur = amount_in_eur.toFixed(3)
 
         $('#eur').text(amount_in_eur);
 
         var date = getActualFullDate();
 
-        $('#history').append('<tr><td>' + date +'</td><td>'+ amount + '&nbsp;' + current +'</td><td>'+ amount_in_eur + '&nbsp; EUR</td></tr>');
+        $('#history').append('<tr><td>' + date +'</td><td>'+ amount + '&nbsp;' + current +'</td><td><div> <div style="display: inline-block">'+ amount_in_eur + '</div>&nbsp; <div style="display: inline-block">EUR</div> </div></td></tr>');
 
         createCookie(date, amount, current, amount_in_eur);
 
